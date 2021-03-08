@@ -107,8 +107,8 @@ public class NATSGatewayImpl implements Gateway {
                 }
             }
             try {
-                sc.close();
                 publishingShutdownLatch.countDown();
+                sc.close();
             } catch (Exception e) {
                 LOG.error("Error closing streaming connection: %s\n" + e.getMessage());
             }
@@ -143,6 +143,9 @@ public class NATSGatewayImpl implements Gateway {
 
     @Override
     public boolean isConnected() {
+        if (stanConnection ==  null) {
+            return Boolean.FALSE;
+        }
         return (stanConnection != null && stanConnection.getNatsConnection() != null
                 && (stanConnection.getNatsConnection().getStatus().CONNECTED.equals(Status.CONNECTED)));
     }
