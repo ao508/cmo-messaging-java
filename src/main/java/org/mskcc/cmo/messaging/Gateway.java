@@ -5,5 +5,5 @@ public interface Gateway {
     boolean isConnected();
     void publish(String topic, Object message) throws Exception;
     void subscribe(String topic, Class messageClass, MessageConsumer messageConsumer) throws Exception;
-    void shutdown() throws Exception;
+    boolean shutdown() throws Exception;
 }

@@ -176,13 +176,23 @@ public class NATSGatewayImpl implements Gateway {
     }
 
     @Override
-    public void shutdown() throws Exception {
+    public boolean shutdown() throws Exception {
         if (!isConnected()) {
             throw new IllegalStateException("Gateway connection has not been established");
         }
         exec.shutdownNow();
+        LOG.debug("Beginning shutdown of messaging gateway...");
         shutdownInitiated = true;
+        LOG.debug("Awaiting publishing shutdown latch...");
         publishingShutdownLatch.await();
+        LOG.debug("Closing connection....");
         stanConnection.close();
+        if (!isConnected()) {
+            System.out.println("Successfully shutdown messaging gateway");
+            return true;
+        } else {
+            System.out.println("Was unable to shutdown messaging gateway");
+            return false;
+        }
     }
 }
