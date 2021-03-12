@@ -57,6 +57,13 @@ public class NATSGatewayImpl implements Gateway {
 
     private final Log LOG = LogFactory.getLog(NATSGatewayImpl.class);
 
+    public NATSGatewayImpl() {}
+    public NATSGatewayImpl(String clusterID, String clientID, String natsURL) {
+        this.clusterID = clusterID;
+        this.clientID = clientID;
+        this.natsURL = natsURL;
+    }
+
     private class PublishingQueueTask {
         String topic;
         Object message;
