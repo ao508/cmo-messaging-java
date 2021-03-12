@@ -143,6 +143,7 @@ public class NATSGatewayImpl implements Gateway {
 
     @Override
     public boolean isConnected() {
+        System.out.println(stanConnection.getNatsConnection().getStatus());
         return (stanConnection != null && stanConnection.getNatsConnection() != null
                 && (stanConnection.getNatsConnection().getStatus().CONNECTED.equals(Status.CONNECTED)));
     }
